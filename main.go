@@ -8,7 +8,7 @@ import (
 	"os/signal"
 
 	"github.com/bwmarrin/discordgo"
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var (
@@ -45,7 +45,7 @@ func main() {
 		log.Fatalf("Cannot open the session: %v", err)
 	}
 
-	db, err := sql.Open("sqlite3", "file:locked.sqlite?cache=shared")
+	db, err := sql.Open("mysql", "file:locked.sqlite?cache=shared")
 	if err != nil {
 		panic(err)
 	}
