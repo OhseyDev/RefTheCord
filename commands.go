@@ -1,7 +1,10 @@
 package main
 
 import (
+	"log"
+
 	"github.com/bwmarrin/discordgo"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -95,3 +98,28 @@ var (
 		},
 	}
 )
+
+func registerCMD(s *discordgo.Session) []*discordgo.ApplicationCommand {
+	registeredCommands := make([]*discordgo.ApplicationCommand, len(commands))
+	for i, v := range commands {
+		cmd, err := s.ApplicationCommandCreate(s.State.User.ID, viper.GetString("guild"), v)
+		if err != nil {
+			log.Panicf("Cannot create '%v' command: %v", v.Name, err)
+		}
+		registeredCommands[i] = cmd
+	}
+	return registeredCommands
+}
+
+func deleteCMD(cmds []*discordgo.ApplicationCommand, s *discordgo.Session) {
+	for _, v := range cmds {
+		err := s.ApplicationCommandDelete(s.State.User.ID, viper.GetString("guild"), v.ID)
+		if err != nil {
+			log.Panicf("Cannot delete '%v' command: %v", v.Name, err)
+		}
+	}
+}
+
+func create(num int64) *int64 {
+	return &num
+}
