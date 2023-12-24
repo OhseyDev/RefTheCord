@@ -17,11 +17,15 @@ func main() {
 	flag.StringVar(&DBConnect, "db", "", "Database Connect String")
 	flag.Parse()
 	if Token == nil || len(Token) <= 0 {
-		Token = os.Getenv("DISCORD_TOKEN")
+		Token = os.Getenv("BOT_TOKEN")
+		if Token == nil {
+			log.Fatalf("No Discord Bot Token provided")
+			return
+		}
 	}
 	discord, err := discordgo.New("Bot " + TOKEN)
 	if err != nil {
-		log.Fatalf(err)
+		log.Fatalf("Error on Discord login: " + err)
 		return
 	}
 	discord.AddHandler(messageCreate)
