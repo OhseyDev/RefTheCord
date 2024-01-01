@@ -18,7 +18,7 @@ type config struct {
 	MaxConnDB	int	`env:"DBCONNLIMIT"`
 }
 
-func main() {
+func main() i
 	cfg := config{}
 	if err := env.Parse(&cfg); err != nil { fmt.Printf("%+v\n", err) }
 	db, err := sql.Open("mysql", cfg.ConnectStr)
