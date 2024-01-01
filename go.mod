@@ -1,4 +1,4 @@
-module refthecord.ohsey.me/m/v2
+module refthecord.ohsey.me/refthecord/v2
 
 go 1.18
 

@@ -15,6 +15,7 @@ import (
 type config struct {
 	Token		string	`env:"TOKEN"`
 	ConnectStr	string	`env:"DBCONN"`
+	MaxConnDB	int	`env:"DBCONNLIMIT"`
 }
 
 func main() {
@@ -26,8 +27,8 @@ func main() {
 		return
 	}
 	db.SetConnMaxLifetime(time.Minute * 3)
-	db.SetMaxOpenConns(10)
-	db.SetMaxIdleConns(10)
+	db.SetMaxOpenConns(cfg.MaxConnDB)
+	db.SetMaxIdleConns(cfg.MaxConnDB)
 	discord, err := discordgo.New("Bot " + cfg.Token)
 	if err != nil {
 		log.Fatalf("Error on Discord login: %v", err)
@@ -35,8 +36,7 @@ func main() {
 	}
 	discord.Identify.Intents = 17995913063488
 	discord.AddHandler(messageCreate)
-	err = discord.Open()
-	if err != nil {
+	if err = discord.Open(); err != nil {
 		log.Fatalf("Cannot open the session: %v", err)
 		return
 	}
@@ -45,10 +45,5 @@ func main() {
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
 	<-sc
-}
-
-func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if m.Author.Bot { return }
-	// chanid := m.ChannelID
 }
 
