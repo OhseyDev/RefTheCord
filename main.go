@@ -10,9 +10,11 @@ import (
 	"log"
 	"syscall"
 	"time"
+	"github.com/RefTheCord/App/handlers"
 )
 
 type config struct {
+	DBType		string	`env:"DBTYPE"`
 	Token		string	`env:"TOKEN"`
 	ConnectStr	string	`env:"DBCONN"`
 	MaxConnDB	int	`env:"DBCONNLIMIT"`
@@ -21,7 +23,7 @@ type config struct {
 func main() i
 	cfg := config{}
 	if err := env.Parse(&cfg); err != nil { fmt.Printf("%+v\n", err) }
-	db, err := sql.Open("mysql", cfg.ConnectStr)
+	db, err := sql.Open(cfg.DBType, cfg.ConnectStr)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 		return
@@ -35,7 +37,7 @@ func main() i
 		return
 	}
 	discord.Identify.Intents = 17995913063488
-	discord.AddHandler(messageCreate)
+	discord.AddHandler(handlers.messageCreate)
 	if err = discord.Open(); err != nil {
 		log.Fatalf("Cannot open the session: %v", err)
 		return
