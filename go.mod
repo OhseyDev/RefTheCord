@@ -1,4 +1,5 @@
-module refthecord.ohsey.me/refthecord/v2
+//module refthecord.ohsey.me/package/v2
+module github.com/RefTheCord/App
 
 go 1.18
 
@@ -9,4 +10,5 @@ require (
 	github.com/gorilla/websocket v1.4.2 // indirect
 	golang.org/x/crypto v0.17.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
+	github.com/RefTheCord/App/handlers v0.0.0 // indirect
 )

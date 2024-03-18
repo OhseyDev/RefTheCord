@@ -10,6 +10,7 @@ import (
 	"log"
 	"syscall"
 	"time"
+	"flag"
 	"github.com/RefTheCord/App/handlers"
 )
 
@@ -20,7 +21,7 @@ type config struct {
 	MaxConnDB	int	`env:"DBCONNLIMIT"`
 }
 
-func main() i
+func main() {
 	cfg := config{}
 	if err := env.Parse(&cfg); err != nil { fmt.Printf("%+v\n", err) }
 	db, err := sql.Open(cfg.DBType, cfg.ConnectStr)
@@ -43,9 +44,16 @@ func main() i
 		return
 	}
 	defer discord.Close()
+	defer db.Close()
 	log.Print("Bot is now running. Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
 	<-sc
+}
+
+func flags(cfg *config) {
+	if cfg.ConnectStr == nil {
+		cfg.ConnectStr = flag.String("dbconn", "", "Database connect string")
+	}
 }
 
