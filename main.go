@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"time"
 	"flag"
-	"github.com/RefTheCord/App/handlers"
+	"refthecord/handlers"
 )
 
 type config struct {
