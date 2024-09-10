@@ -17,7 +17,19 @@ func generate() []*discordgo.ApplicationCommand {
 					Description: "Modify an existing tournament",
 					Options: []*discordgo.ApplicationCommandOption {},
 					Type: discordgo.ApplicationCommandOptionSubCommand,
-				}
+				},
+				{
+					Name: "delete",
+					Description: "Delete a tournament",
+					Options: []*discordgo.ApplicationCommandOption {},
+					Type: discordgo.ApplicationCommandOptionSubCommand,
+				},
+				{
+					Name: "list",
+					Description: "List all tournaments",
+					Options: []*discordgo.ApplicationCommandOption {},
+					Type: discordgo.ApplicationCommandOptionSubCommand,
+				},
 			},
 		}
 	};
