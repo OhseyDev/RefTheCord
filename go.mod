@@ -1,4 +1,4 @@
-module github.com/RefTheCord/App
+module github.com/OhseyDev/RefTheCord
 
 go 1.23.0
 

@@ -4,7 +4,7 @@ import (
 	"log"
 	_ "time"
 
-	"github.com/RefTheCord/App/lib"
+	"github.com/OhseyDev/RefTheCord/lib"
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/mattn/go-sqlite3"
 	//"flag"
